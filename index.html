@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Desarrollador Backend & Fullstack</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-slate-950">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-slate-800/80">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <span class="font-bold text-lg tracking-tight text-brand-500">&lt;Dev /&gt;</span>
+            <div class="flex gap-6 text-sm font-medium text-slate-400">
+                <a href="#sobre-mi" class="hover:text-slate-100 transition-colors">Sobre mí</a>
+                <a href="#proyectos" class="hover:text-slate-100 transition-colors">Proyectos</a>
+                <a href="#skills" class="hover:text-slate-100 transition-colors">Stack</a>
+                <a href="#contacto" class="hover:text-slate-100 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 pt-28 pb-20 space-y-28">
+
+        <!-- Hero Section -->
+        <section class="space-y-6 pt-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-500 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                Disponible para nuevos proyectos y roles
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100 max-w-3xl leading-tight">
+                Desarrollador Backend & Fullstack especializado en <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-300">sistemas de alto impacto</span>.
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl leading-relaxed">
+                Diseño y construyo arquitecturas escalables, APIs de alto rendimiento con Python y FastAPI, e integro modelos de Inteligencia Artificial para resolver problemas complejos de negocio.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <a href="#proyectos" class="px-6 py-3 rounded-lg bg-brand-500 hover:bg-brand-600 text-slate-950 font-semibold transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2">
+                    Ver Proyectos <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <a href="#contacto" class="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 font-semibold transition-all">
+                    Contactar
+                </a>
+            </div>
+        </section>
+
+        <!-- Sobre mi -->
+        <section id="sobre-mi" class="space-y-4">
+            <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Sobre mí</h2>
+            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 space-y-4">
+                <p class="text-slate-300 leading-relaxed">
+                    Especializado en la creación de servicios backend modernos, procesamiento asíncrono y la optimización de flujos empresariales. Me enfoco en escribir código limpio, mantenible y centrado en el valor del producto final.
+                </p>
+            </div>
+        </section>
+
+        <!-- Proyectos -->
+        <section id="proyectos" class="space-y-8">
+            <div>
+                <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Portafolio</h2>
+                <h3 class="text-2xl font-bold text-slate-100">Proyectos Destacados</h3>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8">
+
+                <!-- Proyecto 1 -->
+                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-brand-500 font-mono">01 / Fullstack & AI Integration</span>
+                            <h4 class="text-xl font-bold text-slate-100 mt-1">Plataforma de Reclutamiento Inteligente con IA</h4>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Desarrollo de una solución web integral para empresas clientes que automatiza la recepción y evaluación de candidatos. Integra modelos de IA para el análisis semántico de CVs, clasificando y puntuando a los postulantes de acuerdo con los requisitos técnicos de la vacante.
+                    </p>
+                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <p><strong class="text-brand-500">Reto técnico:</strong> Extracción precisa de datos heterogéneos y cálculo de coincidencias semánticas en tiempo real.</p>
+                        <p><strong class="text-brand-500">Impacto:</strong> Reducción drástica en el tiempo de filtrado inicial de perfiles por parte del equipo de Selección.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Python</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">FastAPI</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">AI / Natural Language Processing</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">PostgreSQL</span>
+                    </div>
+                </article>
+
+                <!-- Proyecto 2 -->
+                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-brand-500 font-mono">02 / Backend & Architecture Migration</span>
+                            <h4 class="text-xl font-bold text-slate-100 mt-1">Migración de Servicios SOAP a REST API</h4>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Modernización de la arquitectura de servicios web heredados en protocolo SOAP hacia un entorno RESTful con FastAPI. Implementación de esquemas de validación estrictos y generación automática de documentación interactiva.
+                    </p>
+                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <p><strong class="text-brand-500">Reto técnico:</strong> Mantener la compatibilidad y consistencia de los datos críticos durante el proceso de transición de formato XML a JSON.</p>
+                        <p><strong class="text-brand-500">Impacto:</strong> Optimización en la latencia de respuesta y simplificación del consumo para aplicaciones cliente.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">FastAPI</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Pydantic</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">RESTful Architecture</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">SOAP / XML</span>
+                    </div>
+                </article>
+
+                <!-- Proyecto 3 -->
+                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-brand-500 font-mono">03 / Microservices & Messaging</span>
+                            <h4 class="text-xl font-bold text-slate-100 mt-1">Sistema de Microservicios para Procesamiento Asíncrono</h4>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Diseño y despliegue de microservicios orientados al procesamiento masivo de mensajes. Implementación de patrones desacoplados para garantizar la tolerancia a fallos y la disponibilidad continua ante picos de tráfico.
+                    </p>
+                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <p><strong class="text-brand-500">Reto técnico:</strong> Prevención de pérdida de eventos y control de concurrencia bajo cargas elevadas.</p>
+                        <p><strong class="text-brand-500">Impacto:</strong> Alta estabilidad operativa y escalabilidad horizontal eficiente.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Python</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Microservicios</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Message Queues</span>
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Docker</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Stack Tecnologico -->
+        <section id="skills" class="space-y-6">
+            <div>
+                <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Habilidades</h2>
+                <h3 class="text-2xl font-bold text-slate-100">Stack Tecnológico</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
+                    <h4 class="text-sm font-semibold text-slate-200">Backend & Lenguajes</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Python, FastAPI, Django, REST APIs, Microservicios, SOAP</p>
+                </div>
+                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
+                    <h4 class="text-sm font-semibold text-slate-200">AI & Datos</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">NLP, Integración de LLMs / Vector Search, RAG, Parsing de Documentos</p>
+                </div>
+                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
+                    <h4 class="text-sm font-semibold text-slate-200">Infraestructura & Herramientas</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Git, Docker, PostgreSQL, Linux, Colas de Mensajes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="space-y-6">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-8 sm:p-12 text-center space-y-6">
+                <h2 class="text-3xl font-bold text-slate-100">¿Hablamos de tu próximo proyecto?</h2>
+                <p class="text-slate-400 text-sm max-w-lg mx-auto">
+                    Estoy disponible para colaborar en desarrollo backend, integraciones de IA o migraciones de arquitectura.
+                </p>
+                <div class="flex justify-center gap-4 pt-2">
+                    <a href="mailto:tu-email@ejemplo.com" class="px-6 py-3 rounded-lg bg-brand-500 hover:bg-brand-600 text-slate-950 font-semibold transition-all flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i> Enviar correo
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 font-semibold transition-all flex items-center gap-2">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-900 py-8 text-center text-xs text-slate-600">
+        <p>© 2026 — Diseñado y desarrollado para GitHub Pages.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

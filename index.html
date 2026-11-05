@@ -1681,6 +1681,40 @@
         border-top: 1px solid var(--line);
         padding-top: 18px;
       }
+      .code-context {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        margin: 0 0 22px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .code-context div {
+        background: #f4f3ee;
+        padding: 13px 15px;
+      }
+      .code-context strong {
+        display: block;
+        font: 600 12px var(--display);
+        margin-bottom: 5px;
+      }
+      .code-context span {
+        display: block;
+        color: #777;
+        font: 9px/1.5 var(--mono);
+      }
+      .code-after-queue {
+        margin-top: 18px;
+        padding: 15px 17px;
+        border-left: 3px solid var(--orange);
+        background: #f4f3ee;
+        font-size: 11px;
+        line-height: 1.6;
+        color: #555;
+      }
+      .code-after-queue strong {
+        color: var(--ink);
+      }
       .code-map-head {
         display: flex;
         justify-content: space-between;
@@ -1761,6 +1795,9 @@
         margin-top: 10px;
       }
       @media (max-width: 620px) {
+        .code-context {
+          grid-template-columns: 1fr;
+        }
         .main-code {
           grid-template-columns: 1fr;
           gap: 12px;
@@ -2342,49 +2379,41 @@
         </div>
       </section>
       <div class="below">
-        <section class="code-tour" id="code" aria-labelledby="code-title">
-          <!-- <div class="tour-heading">
-            <div>
-              <p>Recorrido de código · encolado de documentos</p>
-              <h3 id="code-title">
-                Primero, la función que coordina el flujo.
-              </h3>
-            </div>
-            <span>Ejemplo conceptual · Python</span>
-          </div>
-          <div class="main-code">
-            <div class="main-code-label">
-              Código principal<strong>process_inbox()</strong>Lee mensajes
-              pendientes, prepara sus archivos y publica un trabajo por paquete.
-            </div>
-            <div class="code-panel">
-              <pre>
-                <span class="kw">async def</span>
-                <span class="fn">process_inbox</span>
-                (): messages =
-                <span class="kw">await</span>
-                get_unseen_messages()enqueued =
-                <span class="cm">0</span>
-                <span class="kw">for</span>
-                message
-                <span class="kw">in</span> messages:
-        files = <span class="kw">await</span> extract_attachments(message)
-        files = normalize_files(files)
-        files = validate_group_and_deduplicate(files)
-        <span class="kw">if not</span> files:
-            <span class="kw">continue</span>
-
-        package = prepare_package(message, files)
-        <span class="kw">await</span> publish_document_job(package)
-        enqueued += <span class="cm">1</span>
-
-              <span class="kw">return</span> enqueued</pre>
-            </div>
-          </div> -->
+        <section class="section" id="code" aria-labelledby="code-title">
           <div class="code-map" id="code-details">
+            <h3 id="code-title">
+              Recepción de documentos vía correo electrónico.
+            </h3>
+            <div class="code-context" aria-label="Contexto del ejemplo">
+              <div>
+                <strong>1. Lee el buzón</strong>
+                <span
+                  >La tarea programada se conecta a una cuenta configurada y
+                  busca mensajes no vistos.</span
+                >
+              </div>
+              <div>
+                <strong>2. Evita duplicados</strong>
+                <span
+                  >Calcula el hash de cada documento y consulta/guarda la huella
+                  en la base de datos.</span
+                >
+              </div>
+              <div>
+                <strong>3. Entrega al worker</strong>
+                <span
+                  >Encola PDF y XML con metadata del emisor; otro servicio
+                  procesa y registra el resultado.</span
+                >
+              </div>
+            </div>
+
             <div class="code-map-head">
-              <h4>Recorre cada bloque y función</h4>
-              <span>Selecciona una parte para ver su código y qué hace</span>
+              <h4>Explora las funciones del flujo</h4>
+              <span
+                >Selecciona una función; sus referencias te llevan a otros
+                detalles</span
+              >
             </div>
             <div class="code-map-grid">
               <nav
@@ -2435,9 +2464,10 @@
                 <article class="function-code active" data-code="main">
                   <h5>1. Función principal: process_inbox</h5>
                   <p>
-                    Coordina el recorrido. Por cada mensaje llama a las
-                    funciones auxiliares, omite paquetes vacíos y cuenta los
-                    trabajos publicados.
+                    Es el punto de entrada que invoca la tarea programada. Por
+                    cada mensaje coordina la lectura de adjuntos, la
+                    deduplicación persistente y la publicación de un paquete no
+                    vacío.
                   </p>
                   <div class="code-panel">
                     <pre><span class="kw">async def</span> <span class="fn">process_inbox</span>():
@@ -2446,7 +2476,7 @@
     <span class="kw">for</span> message <span class="kw">in</span> messages:
         files = <span class="kw">await</span> extract_attachments(message)
         files = normalize_files(files)
-        files = validate_group_and_deduplicate(files)
+        files = <span class="kw">await</span> register_new_documents(files, message)
         <span class="kw">if not</span> files:
             <span class="kw">continue</span>
         package = prepare_package(message, files)
@@ -2455,21 +2485,22 @@
     <span class="kw">return</span> enqueued</pre>
                   </div>
                   <div class="code-map-note">
-                    Orden: mensajes → adjuntos → validación → paquete → cola.
+                    Ejecutada por el scheduler. Orden: mensajes → adjuntos →
+                    hash en BD → paquete → cola.
                   </div>
                 </article>
                 <article class="function-code" data-code="messages">
                   <h5>2. Buscar mensajes pendientes</h5>
                   <p>
-                    Consulta solo mensajes no procesados para no volver a
-                    encolar los que ya se atendieron.
+                    Consulta el buzón configurado y devuelve los mensajes que
+                    siguen sin marcarse como vistos. La base de datos protege
+                    aparte contra documentos ya recibidos.
                   </p>
                   <div class="code-panel">
                     <pre><span class="kw">async def</span> <span class="fn">get_unseen_messages</span>():
     <span class="kw">return await</span> mail.search(
         folder=<span class="cm">"INBOX"</span>,
-        unread=<span class="kw">True</span>,
-        without_label=<span class="cm">"documents-enqueued"</span>
+        unread=<span class="kw">True</span>
     )</pre>
                   </div>
                   <div class="code-map-note">
@@ -2479,14 +2510,16 @@
                 <article class="function-code" data-code="attachments">
                   <h5>3. Extraer adjuntos</h5>
                   <p>
-                    Recorre los adjuntos del mensaje y conserva los archivos que
-                    pueden entrar al flujo documental.
+                    Recorre los adjuntos y conserva PDF/XML con contenido. La
+                    metadata del emisor se conserva desde el mensaje para el
+                    paquete.
                   </p>
                   <div class="code-panel">
                     <pre><span class="kw">async def</span> <span class="fn">extract_attachments</span>(message):
     attachments = <span class="kw">await</span> mail.get_attachments(message.id)
     <span class="kw">return</span> [item <span class="kw">for</span> item <span class="kw">in</span> attachments
-            <span class="kw">if</span> item.has_content]</pre>
+            <span class="kw">if</span> item.has_content
+            <span class="kw">and</span> item.extension <span class="kw">in</span> {<span class="cm">".pdf"</span>, <span class="cm">".xml"</span>}]</pre>
                   </div>
                   <div class="code-map-note">
                     Se llama después de: <code>get_unseen_messages()</code>
@@ -2510,61 +2543,72 @@
                   </div>
                 </article>
                 <article class="function-code" data-code="validate">
-                  <h5>5. Validar, agrupar y deduplicar</h5>
+                  <h5>5. Validar y registrar huellas</h5>
                   <p>
-                    Descarta archivos inválidos, agrupa los relacionados y
-                    elimina duplicados usando una huella del contenido.
+                    Valida el tipo y el tamaño, calcula SHA-256 y registra cada
+                    hash en la base de datos solo si aún no existe. Así no se
+                    vuelve a encolar un documento ya recibido.
                   </p>
                   <div class="code-panel">
-                    <pre><span class="kw">def</span> <span class="fn">validate_group_and_deduplicate</span>(files):
+                    <pre><span class="kw">async def</span> <span class="fn">register_new_documents</span>(files, message):
     valid = [file <span class="kw">for</span> file <span class="kw">in</span> files
              <span class="kw">if</span> allowed_type(file.content_type)
              <span class="kw">and</span> file.size &lt; MAX_FILE_SIZE]
-    unique = {sha256(file.content): file <span class="kw">for</span> file <span class="kw">in</span> valid}
-    <span class="kw">return</span> group_by_document(list(unique.values()))</pre>
+    new_files = []
+    <span class="kw">for</span> file <span class="kw">in</span> valid:
+        digest = sha256(file.content).hexdigest()
+        inserted = <span class="kw">await</span> documents.insert_hash_if_absent(
+            digest=digest, message_id=message.id
+        )
+        <span class="kw">if</span> inserted:
+            file.content_hash = digest
+            new_files.append(file)
+    <span class="kw">return</span> new_files</pre>
                   </div>
                   <div class="code-map-note">
-                    Se llama después de: <code>normalize_files()</code>
+                    Consulta e inserción deben ser atómicas (por ejemplo, un
+                    índice único sobre el hash). Se llama después de
+                    <code>normalize_files()</code>.
                   </div>
                 </article>
                 <article class="function-code" data-code="package">
                   <h5>6. Preparar el paquete</h5>
                   <p>
-                    Construye el payload que recibirá el worker: origen del
-                    mensaje, archivos y metadatos para trazabilidad.
+                    Construye el payload para el servicio consumidor: documentos
+                    nuevos, hash, ID del mensaje y metadata del emisor.
                   </p>
                   <div class="code-panel">
                     <pre><span class="kw">def</span> <span class="fn">prepare_package</span>(message, files):
     <span class="kw">return</span> {
         <span class="cm">"source_message_id"</span>: message.id,
         <span class="cm">"sender"</span>: message.sender,
-        <span class="cm">"files"</span>: [file.to_payload() <span class="kw">for</span> file <span class="kw">in</span> files],
-        <span class="cm">"idempotency_key"</span>: make_key(message.id, files)
+        <span class="cm">"documents"</span>: [file.to_payload() <span class="kw">for</span> file <span class="kw">in</span> files],
+        <span class="cm">"content_hashes"</span>: [file.content_hash <span class="kw">for</span> file <span class="kw">in</span> files]
     }</pre>
                   </div>
                   <div class="code-map-note">
                     Se llama después de:
-                    <code>validate_group_and_deduplicate()</code>
+                    <code>register_new_documents()</code>
                   </div>
                 </article>
                 <article class="function-code" data-code="publish">
                   <h5>7. Publicar en la cola</h5>
                   <p>
-                    Envía el paquete al worker. La clave de idempotencia ayuda a
-                    evitar trabajos duplicados si el correo vuelve a
-                    consultarse.
+                    Envía el paquete a la cola que escucha el otro servicio. El
+                    hash persistido en la base de datos evita encolar de nuevo
+                    el mismo contenido.
                   </p>
                   <div class="code-panel">
                     <pre><span class="kw">async def</span> <span class="fn">publish_document_job</span>(package):
     <span class="kw">await</span> queue.publish(
         topic=<span class="cm">"documents.process"</span>,
-        message=package,
-        deduplication_key=package[<span class="cm">"idempotency_key"</span>]
+        message=package
     )</pre>
                   </div>
                   <div class="code-map-note">
-                    Aquí termina el encolado. El worker consume este mensaje
-                    para procesar los documentos.
+                    Aquí termina este script. El servicio consumidor extrae la
+                    información y actualiza el estado del documento a
+                    <code>procesado</code> o <code>error</code>.
                   </div>
                 </article>
               </div>
@@ -2612,18 +2656,6 @@
                 >
               </div>
               <section class="rag-diagram project-flow" id="rag-flow">
-                <div class="rag-diagram-head">
-                  <div>
-                    <!-- <p>Flujo del proyecto</p> -->
-                    <!-- <h3>
-                      Del CV postulado al análisis que revisa el reclutador.
-                    </h3> -->
-                  </div>
-                  <!-- <p>Portal · OCR · LLM</p> -->
-                </div>
-                <!-- <p class="flow-scroll-hint">
-                  Desliza para recorrer todas las etapas →
-                </p> -->
                 <div class="flow-row">
                   <div class="flow-node">
                     <div class="flow-art pdf"></div>
@@ -2678,7 +2710,6 @@
         <section class="section" id="experience">
           <div class="section-head">
             <div>
-              <!-- <span>03 / Recorrido</span> -->
               <h2>Experiencia</h2>
             </div>
           </div>
@@ -2825,7 +2856,7 @@
         get_unseen_messages: "messages",
         extract_attachments: "attachments",
         normalize_files: "normalize",
-        validate_group_and_deduplicate: "validate",
+        register_new_documents: "validate",
         prepare_package: "package",
         publish_document_job: "publish",
       };

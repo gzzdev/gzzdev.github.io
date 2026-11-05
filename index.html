@@ -1,208 +1,2911 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio | Desarrollador Backend & Fullstack</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            900: '#14532d',
-                        }
-                    }
-                }
-            }
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#dededb" />
+    <meta
+      name="description"
+      content="Giovanni Arellano — desarrollador backend y fullstack. APIs, sistemas distribuidos e IA aplicada."
+    />
+    <title>Giovanni Arellano — Backend / Fullstack</title>
+    <!-- PP Neue Montreal / PP Neue Neue: añade aquí los archivos licenciados si no están instalados localmente. -->
+    <style>
+      :root {
+        --bg: #dededb;
+        --paper: #f8f7f3;
+        --ink: #090a09;
+        --orange: #ffb43d;
+        --line: #deddd7;
+        --muted: #74746f;
+        --mono: "PP Neue Montreal", "PP Neue Neue", sans-serif;
+        --sans: "PP Neue Montreal", "PP Neue Neue", sans-serif;
+        --display: "PP Neue Neue", "PP Neue Montreal", sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 30px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .stage {
+        max-width: 1440px;
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        padding: 60px 5.2% 90px;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #dededb 0 43%, #f4f3ef 43% 100%);
+      }
+      .backdrop-word {
+        position: absolute;
+        z-index: 0;
+        top: 21px;
+        right: 1.5%;
+        font: 800 clamp(110px, 20vw, 300px)/0.8 var(--display);
+        letter-spacing: -0.105em;
+        color: #080908;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .backdrop-orbit {
+        position: absolute;
+        z-index: 0;
+        top: 26px;
+        right: 5%;
+        width: 35vw;
+        height: 35vw;
+        max-width: 510px;
+        max-height: 510px;
+        border-radius: 50%;
+        background:
+          radial-gradient(
+            circle at 48% 45%,
+            #f8f7f3 0 45%,
+            #c9c9c4 45.4% 46%,
+            transparent 46.4%
+          ),
+          linear-gradient(135deg, #171817, #a7a7a1);
+        opacity: 0.42;
+      }
+      .cross {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        z-index: 1;
+        opacity: 0.8;
+      }
+      .cross:before,
+      .cross:after {
+        content: "";
+        position: absolute;
+        background: #fff;
+      }
+      .cross:before {
+        height: 1px;
+        width: 51px;
+        left: -9px;
+        top: 16px;
+      }
+      .cross:after {
+        width: 1px;
+        height: 51px;
+        top: -9px;
+        left: 16px;
+      }
+      .cross i {
+        position: absolute;
+        inset: 9px;
+        border: 1px solid white;
+        border-radius: 50%;
+      }
+      .cross.one {
+        top: 12px;
+        right: 10%;
+      }
+      .cross.two {
+        top: 520px;
+        left: 6%;
+      }
+      .page {
+        position: relative;
+        z-index: 2;
+        background: var(--paper);
+        width: min(940px, 78%);
+        box-shadow: 0 18px 55px #00000012;
+      }
+      .nav {
+        height: 62px;
+        display: flex;
+        align-items: center;
+        gap: 29px;
+        padding: 0 24px;
+        border-bottom: 1px solid #e6e4de;
+        font-size: 11px;
+      }
+      .logo {
+        font: 700 19px var(--display);
+        letter-spacing: -0.14em;
+        margin-right: auto;
+      }
+      .logo span {
+        display: inline-block;
+        width: 7px;
+        height: 16px;
+        border-radius: 8px;
+        background: var(--orange);
+        margin-left: 5px;
+        vertical-align: -3px;
+      }
+      .nav a:not(.logo) {
+        color: #444540;
+      }
+      .nav a:not(.logo):hover {
+        color: #d3830d;
+      }
+      .nav .availability {
+        font-size: 10px;
+        color: #77766d;
+        margin-left: auto;
+        white-space: nowrap;
+      }
+      .hero {
+        min-height: 565px;
+        padding: 47px 28px 32px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+      }
+      .hero-copy {
+        align-self: center;
+        position: relative;
+        z-index: 2;
+        padding: 0 0 15px;
+      }
+      .eyebrow {
+        font: 10px var(--mono);
+        letter-spacing: 0.06em;
+        color: #73736d;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        font: 800 clamp(60px, 8.1vw, 112px)/0.76 var(--display);
+        letter-spacing: -0.095em;
+        text-transform: lowercase;
+        margin: 28px 0 26px;
+        max-width: 530px;
+      }
+      .hero h1 span {
+        display: block;
+      }
+      .hero h1 .accent {
+        color: var(--ink);
+      }
+      .intro {
+        font-size: 12px;
+        line-height: 1.6;
+        color: #42433e;
+        max-width: 270px;
+        text-align: right;
+        margin: 0 0 26px auto;
+      }
+      .social {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin: 0 0 31px;
+      }
+      .social a {
+        width: 33px;
+        height: 33px;
+        border: 1px solid #111;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font: 10px var(--mono);
+        margin-right: -1px;
+        transition: 0.2s;
+      }
+      .social a:hover {
+        background: var(--orange);
+      }
+      .hero-stats {
+        border-top: 1px solid #e6e4de;
+        display: flex;
+        gap: 44px;
+        padding-top: 24px;
+      }
+      .stat strong {
+        display: block;
+        font: 800 clamp(28px, 4vw, 45px)/1 var(--display);
+        letter-spacing: -0.08em;
+      }
+      .stat small {
+        display: block;
+        font-size: 9px;
+        color: #62635d;
+        line-height: 1.45;
+        margin-top: 6px;
+        max-width: 140px;
+      }
+      .hero-visual {
+        position: relative;
+        min-height: 440px;
+        align-self: center;
+      }
+      .orange-card {
+        position: absolute;
+        top: 0;
+        right: 1%;
+        width: 88%;
+        height: 405px;
+        border-radius: 42px 42px 42px 8px;
+        background: var(--orange);
+        overflow: hidden;
+        box-shadow: 0 22px 42px #d883182a;
+        padding: 25px;
+      }
+      .orange-card:before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border: 1px solid #fff9;
+        border-radius: 50%;
+        top: 64px;
+        left: -88px;
+      }
+      .orange-card:after {
+        content: "";
+        position: absolute;
+        width: 210px;
+        height: 210px;
+        border: 1px solid #fff9;
+        border-radius: 50%;
+        top: 88px;
+        left: -63px;
+      }
+      .signature {
+        font:
+          italic 20px Georgia,
+          serif;
+        color: #fff;
+        position: relative;
+        z-index: 2;
+      }
+      .globe {
+        position: absolute;
+        right: -11px;
+        top: -11px;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: #090a09;
+        color: white;
+        display: grid;
+        place-items: center;
+        font-size: 25px;
+        border: 5px solid var(--paper);
+        z-index: 3;
+      }
+      .terminal {
+        position: absolute;
+        left: 13%;
+        right: 11%;
+        top: 101px;
+        height: 247px;
+        background: #151715;
+        color: #eef0e9;
+        border: 1px solid #ffffff88;
+        border-radius: 10px;
+        box-shadow: 0 16px 25px #693c1555;
+        transform: rotate(2deg);
+        padding: 15px 17px;
+        font: 10px/1.85 var(--mono);
+      }
+      .termbar {
+        display: flex;
+        gap: 5px;
+        border-bottom: 1px solid #ffffff24;
+        padding-bottom: 9px;
+        margin-bottom: 12px;
+      }
+      .termbar i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #ff735e;
+      }
+      .termbar i:nth-child(2) {
+        background: #ffd35a;
+      }
+      .termbar i:nth-child(3) {
+        background: #9fda6a;
+      }
+      .termname {
+        margin-left: auto;
+        color: #a0a39a;
+        font-size: 8px;
+      }
+      .code-line {
+        white-space: nowrap;
+        color: #d8dbd2;
+      }
+      .code-line .dim {
+        color: #81877e;
+      }
+      .code-line .pink {
+        color: #eea7b0;
+      }
+      .code-line .green {
+        color: #c5ee87;
+      }
+      .code-line .orange {
+        color: #ffbd55;
+      }
+      .response {
+        position: absolute;
+        right: 10px;
+        bottom: 17px;
+        background: #242824;
+        border: 1px solid #434840;
+        border-radius: 5px;
+        padding: 7px 10px;
+        color: #a7db82;
+        font-size: 8px;
+      }
+      .bubble {
+        position: absolute;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        border: 3px solid var(--paper);
+        background: #ffc45e;
+        bottom: 54px;
+        left: 5%;
+        display: grid;
+        place-items: center;
+        font-size: 23px;
+        z-index: 2;
+      }
+      .bubble.two {
+        bottom: -13px;
+        left: 5%;
+        background: #f5a631;
+      }
+      .round-link {
+        position: absolute;
+        bottom: -16px;
+        left: 20%;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: #090a09;
+        color: white;
+        display: grid;
+        place-items: center;
+        font-size: 27px;
+        z-index: 3;
+      }
+      .project-peek {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top: 112px;
+        width: 28%;
+        height: 325px;
+        border-radius: 0 48px 48px 0;
+        background: #f7f7f4;
+        overflow: hidden;
+        padding: 20px 17px 16px 24px;
+      }
+      .peek-art {
+        height: 158px;
+        border-radius: 0 34px 34px 34px;
+        background: linear-gradient(
+          145deg,
+          #fff 0 48%,
+          #e9e9e4 49% 51%,
+          #faf9f5 52%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+      .peek-art:before {
+        content: "API";
+        font: 800 50px var(--display);
+        letter-spacing: -0.1em;
+        position: absolute;
+        left: 20px;
+        top: 31px;
+        color: #121412;
+        transform: rotate(-10deg);
+      }
+      .peek-art:after {
+        content: "↗";
+        position: absolute;
+        right: 20px;
+        bottom: 18px;
+        background: var(--orange);
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+      }
+      .peek-label {
+        font: 9px var(--mono);
+        margin-top: 17px;
+      }
+      .peek-title {
+        font: 600 15px/1.15 var(--display);
+        margin-top: 6px;
+        letter-spacing: -0.04em;
+      }
+      .peek-meta {
+        font-size: 9px;
+        color: #777;
+        margin-top: 8px;
+      }
+      .project-peek {
+        display: block;
+        top: 92px;
+        width: 34%;
+        height: 485px;
+        background: #f8f7f3;
+        padding: 21px 19px 18px 26px;
+        border-radius: 0 55px 55px 0;
+      }
+      .peek-art {
+        height: 208px;
+        border-radius: 0 42px 42px 42px;
+        background:
+          linear-gradient(
+            120deg,
+            transparent 0 47%,
+            #d6d6d2 47.5% 49%,
+            transparent 49.5%
+          ),
+          linear-gradient(165deg, #fff 0 38%, #eeede9 39% 42%, #faf9f5 43%);
+      }
+      .peek-art:before {
+        content: "01";
+        font-size: 64px;
+        left: 18px;
+        top: 58px;
+        color: #111;
+        transform: none;
+      }
+      .peek-art:after {
+        right: 15px;
+        bottom: 15px;
+      }
+      .peek-photo {
+        height: 165px;
+        width: 78%;
+        margin: 13px 0 0 auto;
+        border-radius: 45px 45px 45px 7px;
+        background: var(--orange);
+        position: relative;
+        overflow: hidden;
+      }
+      .peek-photo:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -28px;
+        width: 5px;
+        height: 165px;
+        background: #f8e7c7;
+        transform: rotate(8deg);
+        box-shadow:
+          -25px 13px 0 -1px #fff0d0,
+          25px 10px 0 -1px #fff0d0,
+          -48px 33px 0 -2px #fff0d0,
+          48px 30px 0 -2px #fff0d0,
+          -65px 56px 0 -2px #fff0d0,
+          65px 54px 0 -2px #fff0d0;
+      }
+      .peek-photo:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 26px;
+        width: 56px;
+        height: 56px;
+        border: 1px solid #fff8;
+        border-radius: 50%;
+        transform: translateX(-50%);
+      }
+      .peek-label {
+        font: 8px var(--mono);
+        margin-top: 13px;
+      }
+      .peek-title {
+        font: 600 14px/1.15 var(--display);
+        margin-top: 4px;
+        letter-spacing: -0.04em;
+      }
+      .peek-meta {
+        font-size: 8px;
+        color: #777;
+        margin-top: 5px;
+      }
+      .black-strip {
+        position: relative;
+        z-index: 2;
+        background: #080908;
+        color: #fff;
+        width: min(940px, 78%);
+        padding: 0 23px 33px;
+        overflow: hidden;
+      }
+      .marquee {
+        font: 800 clamp(47px, 7.8vw, 110px)/0.98 var(--display);
+        letter-spacing: -0.085em;
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 0 -25px 22px;
+      }
+      .marquee span {
+        display: inline-block;
+      }
+      .marquee b {
+        color: var(--orange);
+        font-size: 0.35em;
+        vertical-align: 0.45em;
+        margin: 0 0.25em;
+      }
+      .about-row {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .about-art {
+        min-height: 300px;
+        background:
+          radial-gradient(ellipse at 50% 70%, #64655f 0 2%, transparent 2.4%),
+          radial-gradient(ellipse at 50% 100%, #ddd 0 17%, transparent 17.5%),
+          linear-gradient(140deg, #141514, #090a09 70%);
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      .about-art .rings {
+        position: absolute;
+        width: 255px;
+        height: 255px;
+        border: 15px solid #f2f1eb;
+        border-radius: 50%;
+        opacity: 0.9;
+        box-shadow:
+          0 0 0 16px #ffffff1c,
+          0 0 0 33px #ffffff10;
+      }
+      .about-art .cube {
+        position: relative;
+        width: 106px;
+        height: 106px;
+        background: linear-gradient(135deg, #ffc15a, #d98410);
+        transform: rotate(45deg);
+        box-shadow: 16px 17px 0 #fff2;
+      }
+      .about-art .cube:after {
+        content: "{}";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: #121310;
+        font: 700 40px var(--mono);
+        transform: rotate(-45deg);
+      }
+      .about-copy .label {
+        font: 10px var(--mono);
+        color: var(--orange);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .about-copy h2 {
+        font: 700 clamp(26px, 3.5vw, 42px)/1.05 var(--display);
+        letter-spacing: -0.07em;
+        margin: 14px 0;
+      }
+      .about-copy p {
+        font-size: 12px;
+        line-height: 1.75;
+        color: #b7b8b2;
+        max-width: 390px;
+      }
+      .about-copy a {
+        display: inline-block;
+        margin-top: 12px;
+        border-bottom: 1px solid #fff;
+        font: 10px var(--mono);
+        padding-bottom: 6px;
+      }
+      .below {
+        position: relative;
+        z-index: 2;
+        width: min(940px, 78%);
+        margin-left: auto;
+        background: var(--paper);
+        padding: 55px 32px 45px;
+      }
+      .section {
+        padding: 0 0 48px;
+      }
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+      }
+      .section-head span {
+        font: 10px var(--mono);
+        text-transform: uppercase;
+        color: #777;
+      }
+      .section-head h2 {
+        font: 700 30px var(--display);
+        letter-spacing: -0.06em;
+        margin: 0;
+      }
+      .projects-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+      .project {
+        border: 1px solid var(--line);
+        padding: 18px;
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #fffefa;
+      }
+      .project:nth-child(2) {
+        background: #f3dfbc;
+      }
+      .project:nth-child(3) {
+        background: #e3e5dd;
+      }
+      .project .num {
+        font: 9px var(--mono);
+        color: #777;
+      }
+      .project h3 {
+        font: 700 17px/1.1 var(--display);
+        letter-spacing: -0.04em;
+        margin: 23px 0 7px;
+      }
+      .project p {
+        font-size: 10px;
+        line-height: 1.55;
+        color: #62635e;
+        margin: 0;
+      }
+      .tags {
+        font: 8px var(--mono);
+        color: #787970;
+        margin-top: 12px;
+      }
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 12px;
+        font: 9px var(--mono);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .project-link:hover {
+        color: #a45c00;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: 115px 1fr 130px;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .timeline time,
+      .timeline .tech {
+        font: 9px var(--mono);
+        color: #777;
+      }
+      .timeline .tech {
+        text-align: right;
+      }
+      .timeline h3 {
+        font: 600 13px var(--display);
+        margin: 0;
+      }
+      .timeline p {
+        font-size: 10px;
+        line-height: 1.6;
+        color: #666;
+        margin: 5px 0 0;
+      }
+      .company-line {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 2px;
+      }
+      .company-line h3 {
+        margin: 0;
+      }
+      .company-logo {
+        display: block;
+        width: auto;
+        height: 24px;
+        max-width: 110px;
+        object-fit: contain;
+        object-position: left center;
+      }
+      .company-logo.ehecatl {
+        height: 28px;
+        max-width: 100px;
+      }
+      .company-logo.gds {
+        height: 22px;
+        max-width: 118px;
+      }
+      .skills {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+      .skill {
+        padding: 13px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .skill b {
+        font: 9px var(--mono);
+        display: block;
+        color: #777;
+        margin-bottom: 9px;
+      }
+      .skill span {
+        font-size: 10px;
+        line-height: 1.7;
+      }
+      .contact {
+        background: var(--orange);
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .contact h2 {
+        font: 700 29px/1 var(--display);
+        letter-spacing: -0.07em;
+        margin: 0;
+      }
+      .contact p {
+        font-size: 10px;
+        line-height: 1.6;
+        max-width: 240px;
+      }
+      .contact a {
+        border: 1px solid #111;
+        padding: 11px 14px;
+        font: 10px var(--mono);
+        white-space: nowrap;
+      }
+      .footer {
+        position: relative;
+        z-index: 2;
+        max-width: 1440px;
+        margin: auto;
+        padding: 20px 5.2%;
+        display: flex;
+        justify-content: space-between;
+        font: 9px var(--mono);
+        color: #60615d;
+      }
+      @media (max-width: 900px) {
+        .stage {
+          padding: 42px 4% 65px;
         }
-    </script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-slate-950">
-
-    <!-- Navbar -->
-    <nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md z-50 border-b border-slate-800/80">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="font-bold text-lg tracking-tight text-brand-500">&lt;Dev /&gt;</span>
-            <div class="flex gap-6 text-sm font-medium text-slate-400">
-                <a href="#sobre-mi" class="hover:text-slate-100 transition-colors">Sobre mí</a>
-                <a href="#proyectos" class="hover:text-slate-100 transition-colors">Proyectos</a>
-                <a href="#skills" class="hover:text-slate-100 transition-colors">Stack</a>
-                <a href="#contacto" class="hover:text-slate-100 transition-colors">Contacto</a>
+        .page,
+        .black-strip,
+        .below {
+          width: 88%;
+        }
+        .hero {
+          padding: 40px 22px 25px;
+          min-height: 520px;
+        }
+        .hero h1 {
+          font-size: clamp(58px, 9vw, 86px);
+        }
+        .hero-visual {
+          min-height: 390px;
+        }
+        .orange-card {
+          height: 360px;
+        }
+        .terminal {
+          top: 86px;
+          height: 220px;
+          font-size: 9px;
+        }
+        .project-peek {
+          top: 180px;
+          width: 22%;
+          height: 270px;
+          padding: 14px;
+        }
+        .peek-art {
+          height: 120px;
+        }
+        .peek-art:before {
+          font-size: 36px;
+        }
+        .hero-stats {
+          gap: 25px;
+        }
+        .hero-stats .stat strong {
+          font-size: 34px;
+        }
+        .backdrop-word {
+          font-size: 22vw;
+        }
+        .below {
+          padding: 40px 24px;
+        }
+        .black-strip {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+      }
+      @media (max-width: 620px) {
+        .stage {
+          padding: 22px 12px 35px;
+          background: linear-gradient(180deg, #dededb 0 26%, #f4f3ef 26% 100%);
+        }
+        .backdrop-word {
+          top: 20px;
+          right: -4%;
+          font-size: 29vw;
+        }
+        .backdrop-orbit {
+          width: 65vw;
+          height: 65vw;
+          right: -13%;
+          top: 27px;
+        }
+        .cross.one {
+          right: 8%;
+          top: 10px;
+        }
+        .cross.two {
+          top: 400px;
+          left: 4%;
+        }
+        .page,
+        .black-strip,
+        .below {
+          width: 100%;
+        }
+        .nav {
+          height: 53px;
+          padding: 0 14px;
+          gap: 15px;
+          font-size: 9px;
+        }
+        .nav .availability {
+          display: none;
+        }
+        .hero {
+          display: flex;
+          flex-direction: column;
+          padding: 33px 18px 20px;
+          min-height: initial;
+          gap: 18px;
+        }
+        .hero h1 {
+          font-size: clamp(62px, 16vw, 92px);
+          margin: 23px 0 19px;
+        }
+        .intro {
+          text-align: left;
+          margin: 0 0 19px;
+          font-size: 11px;
+          max-width: 290px;
+        }
+        .social {
+          margin-bottom: 20px;
+        }
+        .hero-stats {
+          padding-top: 17px;
+          gap: 27px;
+        }
+        .hero-stats .stat strong {
+          font-size: 32px;
+        }
+        .hero-visual {
+          width: 100%;
+          min-height: 365px;
+          margin-top: 6px;
+        }
+        .orange-card {
+          right: 5%;
+          width: 82%;
+          height: 330px;
+          border-radius: 32px 32px 32px 7px;
+          padding: 19px;
+        }
+        .terminal {
+          left: 10%;
+          right: 9%;
+          top: 83px;
+          height: 207px;
+          padding: 12px;
+          font-size: 8px;
+        }
+        .code-line {
+          font-size: 8px;
+        }
+        .bubble {
+          left: 3%;
+          bottom: 41px;
+        }
+        .bubble.two {
+          left: 3%;
+          bottom: -13px;
+        }
+        .round-link {
+          left: 18%;
+          bottom: -16px;
+        }
+        .project-peek {
+          display: none;
+        }
+        .black-strip {
+          padding: 0 14px 24px;
+        }
+        .marquee {
+          font-size: 16vw;
+          margin-bottom: 14px;
+        }
+        .about-row {
+          grid-template-columns: 1fr;
+          gap: 21px;
+        }
+        .about-art {
+          min-height: 230px;
+        }
+        .about-art .rings {
+          width: 190px;
+          height: 190px;
+          border-width: 12px;
+        }
+        .about-copy h2 {
+          font-size: 32px;
+        }
+        .about-copy p {
+          font-size: 11px;
+        }
+        .below {
+          padding: 35px 17px;
+        }
+        .section-head h2 {
+          font-size: 25px;
+        }
+        .projects-list {
+          grid-template-columns: 1fr;
+        }
+        .project {
+          min-height: 148px;
+        }
+        .timeline {
+          grid-template-columns: 1fr auto;
+          gap: 5px 10px;
+        }
+        .timeline time {
+          grid-column: 1/-1;
+        }
+        .timeline .tech {
+          grid-column: 1/-1;
+          text-align: left;
+        }
+        .skills {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .contact {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .contact h2 {
+          font-size: 31px;
+        }
+        .footer {
+          padding: 15px 4%;
+          gap: 9px;
+          flex-wrap: wrap;
+          font-size: 8px;
+        }
+      }
+      .code-showcase {
+        display: grid;
+        grid-template-columns: 24% 1fr;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        padding: 24px 0 48px;
+      }
+      .code-caption {
+        font: 10px/1.6 var(--mono);
+        color: #777;
+        text-transform: uppercase;
+      }
+      .code-caption strong {
+        display: block;
+        color: var(--ink);
+        font: 600 16px/1.1 var(--display);
+        text-transform: none;
+        margin-top: 8px;
+      }
+      .code-panel {
+        background: #101210;
+        color: #e9ece3;
+        padding: 21px 23px;
+        overflow: auto;
+        box-shadow: 10px 10px 0 var(--orange);
+      }
+      .code-panel pre {
+        margin: 0;
+        font: 11px/1.8 var(--mono);
+        white-space: pre;
+      }
+      .code-panel .kw {
+        color: #efa7b1;
+      }
+      .code-panel .fn {
+        color: #ffbd55;
+      }
+      .code-panel .cm {
+        color: #7e877e;
+      }
+      .rag-diagram {
+        /* border-top: 1px solid var(--line); */
+        padding: 24px 0 52px;
+      }
+      .rag-diagram-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-bottom: 18px;
+      }
+      .rag-diagram-head p {
+        font: 10px var(--mono);
+        color: #777;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      .rag-diagram-head h3 {
+        font: 600 20px var(--display);
+        letter-spacing: -0.04em;
+        margin: 7px 0 0;
+      }
+      .flow-row {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        align-items: stretch;
+        gap: 0;
+      }
+      .flow-node {
+        position: relative;
+        min-height: 106px;
+        border: 1px solid #cfcfc8;
+        background: #fffefa;
+        padding: 14px 10px;
+      }
+      .flow-node:not(:last-child):after {
+        content: "→";
+        position: absolute;
+        z-index: 2;
+        right: -13px;
+        top: 42px;
+        font: 20px var(--display);
+        color: #111;
+      }
+      .flow-node strong {
+        display: block;
+        font: 600 12px/1.08 var(--display);
+        letter-spacing: -0.03em;
+      }
+      .flow-node span {
+        display: block;
+        font: 9px/1.4 var(--mono);
+        color: #777;
+        margin-top: 9px;
+      }
+      .flow-node:nth-child(2),
+      .flow-node:nth-child(6) {
+        background: #f3dfbc;
+      }
+      .flow-node:nth-child(4) {
+        background: #e3e5dd;
+      }
+      .flow-node:nth-child(5) {
+        background: #dfe7e8;
+      }
+      .flow-query {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .query-node {
+        border: 1px solid var(--line);
+        padding: 13px;
+        background: #101210;
+        color: #fff;
+        font: 10px var(--mono);
+      }
+      .query-node strong {
+        color: var(--orange);
+        font-weight: 500;
+      }
+      .query-arrow {
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--line);
+        font: 12px var(--mono);
+        color: #777;
+      }
+      @media (max-width: 620px) {
+        .code-showcase {
+          grid-template-columns: 1fr;
+          gap: 15px;
+          padding-top: 18px;
+        }
+        .code-panel {
+          padding: 16px 14px;
+          box-shadow: 6px 6px 0 var(--orange);
+        }
+        .code-panel pre {
+          font-size: 9px;
+        }
+        .rag-diagram {
+          overflow: hidden;
+        }
+        .rag-diagram-head {
+          display: block;
+        }
+        .flow-row {
+          display: flex;
+          overflow-x: auto;
+          padding-bottom: 12px;
+        }
+        .flow-node {
+          flex: 0 0 130px;
+          min-height: 118px;
+        }
+        .flow-node:not(:last-child):after {
+          right: -13px;
+        }
+        .flow-query {
+          grid-template-columns: 1fr;
+        }
+      }
+      .flow-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 28px 42px;
+      }
+      .flow-node {
+        min-height: 174px;
+        padding: 15px;
+      }
+      .flow-node:after {
+        content: "→";
+        right: -29px;
+        top: 66px;
+        font-size: 24px;
+      }
+      .flow-node:nth-child(4):after {
+        content: "↓";
+        right: calc(50% - 7px);
+        top: auto;
+        bottom: -31px;
+      }
+      .flow-node:nth-child(5) {
+        grid-column: 4;
+      }
+      .flow-node:nth-child(5):after,
+      .flow-node:nth-child(6):after {
+        content: "←";
+        left: -29px;
+        right: auto;
+      }
+      .flow-node:nth-child(6) {
+        grid-column: 3;
+      }
+      .flow-node:nth-child(7) {
+        grid-column: 2;
+      }
+      .flow-node:last-child:after {
+        display: none;
+      }
+      .flow-node strong {
+        margin-top: 12px;
+      }
+      .flow-art {
+        height: 74px;
+        border-radius: 11px;
+        background: #edece6;
+        position: relative;
+        overflow: hidden;
+      }
+      .flow-art:before,
+      .flow-art:after {
+        content: "";
+        position: absolute;
+      }
+      .flow-art.pdf:before {
+        width: 40px;
+        height: 50px;
+        left: calc(50% - 20px);
+        top: 12px;
+        background: #fff;
+        border: 2px solid #111;
+        border-radius: 4px;
+        box-shadow: 9px 6px 0 -1px var(--orange);
+      }
+      .flow-art.pdf:after {
+        width: 22px;
+        height: 2px;
+        left: calc(50% - 11px);
+        top: 31px;
+        background: #111;
+        box-shadow: 0 8px 0 #111;
+      }
+      .flow-art.validate:before {
+        width: 48px;
+        height: 48px;
+        left: calc(50% - 24px);
+        top: 13px;
+        border: 3px solid #111;
+        border-radius: 50%;
+      }
+      .flow-art.validate:after {
+        content: "✓";
+        font: 700 31px var(--display);
+        left: calc(50% - 12px);
+        top: 14px;
+      }
+      .flow-art.queue:before {
+        width: 48px;
+        height: 30px;
+        left: calc(50% - 24px);
+        top: 24px;
+        border: 2px solid #111;
+        border-radius: 5px;
+        box-shadow: 0 9px 0 -1px var(--orange);
+      }
+      .flow-art.queue:after {
+        width: 6px;
+        height: 6px;
+        left: calc(50% - 15px);
+        top: 36px;
+        border-radius: 50%;
+        background: #111;
+        box-shadow:
+          12px 0 #111,
+          24px 0 #111;
+      }
+      .flow-art.ocr:before {
+        width: 42px;
+        height: 42px;
+        left: calc(50% - 27px);
+        top: 13px;
+        border: 3px solid #111;
+        border-radius: 50%;
+      }
+      .flow-art.ocr:after {
+        width: 24px;
+        height: 3px;
+        left: calc(50% + 4px);
+        top: 53px;
+        background: #111;
+        transform: rotate(45deg);
+      }
+      .flow-art.chunks:before {
+        width: 50px;
+        height: 8px;
+        left: calc(50% - 25px);
+        top: 20px;
+        background: #111;
+        box-shadow:
+          0 14px 0 var(--orange),
+          0 28px 0 #111;
+      }
+      .flow-art.embedding:before {
+        width: 48px;
+        height: 48px;
+        left: calc(50% - 24px);
+        top: 13px;
+        border: 2px solid #111;
+        border-radius: 50%;
+        box-shadow:
+          inset 0 0 0 7px #f3dfbc,
+          inset 0 0 0 14px #111;
+      }
+      .flow-art.embedding:after {
+        content: "∿";
+        font: 32px var(--display);
+        left: calc(50% - 13px);
+        top: 17px;
+      }
+      .flow-art.qdrant:before {
+        width: 47px;
+        height: 19px;
+        left: calc(50% - 24px);
+        top: 20px;
+        border: 2px solid #111;
+        border-radius: 50%;
+        background: #dfe7e8;
+        box-shadow:
+          0 13px 0 -1px #dfe7e8,
+          0 13px 0 0 #111,
+          0 26px 0 -1px #dfe7e8,
+          0 26px 0 0 #111;
+      }
+      @media (max-width: 620px) {
+        .flow-row {
+          display: flex;
+          overflow-x: auto;
+          padding-bottom: 12px;
+        }
+        .flow-node {
+          flex: 0 0 130px;
+          min-height: 174px;
+        }
+        .flow-node:nth-child(5),
+        .flow-node:nth-child(6),
+        .flow-node:nth-child(7) {
+          grid-column: auto;
+        }
+        .flow-node:nth-child(4):after {
+          content: "→";
+          right: -29px;
+          top: 66px;
+          bottom: auto;
+        }
+        .flow-node:nth-child(5):after,
+        .flow-node:nth-child(6):after {
+          content: "→";
+          left: auto;
+          right: -29px;
+        }
+      }
+      /* Una sola familia tipográfica en todos los componentes. */
+      .signature {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 500;
+      }
+      /* Composición de la referencia: página editorial blanca a ancho completo. */
+      .stage {
+        max-width: 1440px;
+        padding: 30px 2% 70px;
+        background: var(--paper);
+      }
+      .stage:before,
+      .backdrop-word,
+      .backdrop-orbit,
+      .cross,
+      .project-peek {
+        display: none;
+      }
+      .page,
+      .black-strip,
+      .below {
+        width: 100%;
+        box-shadow: none;
+      }
+      .page {
+        z-index: 1;
+      }
+      .hero {
+        min-height: 650px;
+        padding: 72px 28px 42px;
+        grid-template-columns: 1fr 1.03fr;
+      }
+      .hero h1 {
+        font-size: clamp(72px, 9.3vw, 132px);
+        line-height: 0.79;
+        max-width: 650px;
+        margin-top: 35px;
+      }
+      .hero-copy {
+        padding-left: 5px;
+      }
+      .hero-visual {
+        min-height: 500px;
+      }
+      .orange-card {
+        height: 500px;
+        width: 91%;
+        border-radius: 54px 54px 54px 9px;
+      }
+      .terminal {
+        top: 124px;
+        height: 305px;
+        font-size: 11px;
+        line-height: 2.05;
+      }
+      .bubble {
+        bottom: 70px;
+      }
+      .bubble.two {
+        bottom: -14px;
+      }
+      .round-link {
+        bottom: -17px;
+      }
+      .black-strip {
+        padding: 0 28px 50px;
+      }
+      .marquee {
+        font-size: clamp(60px, 8.6vw, 122px);
+        margin-left: -28px;
+        margin-right: -28px;
+        margin-bottom: 35px;
+      }
+      .about-row {
+        grid-template-columns: 1.05fr 1fr;
+        gap: 60px;
+      }
+      .about-art {
+        min-height: 430px;
+      }
+      .about-copy h2 {
+        font-size: clamp(34px, 4.5vw, 58px);
+      }
+      .below {
+        padding: 65px 28px 45px;
+      }
+      .projects-list {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .project {
+        min-height: 145px;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 24% 1fr 24%;
+        align-items: center;
+        gap: 20px;
+        padding: 24px 0;
+      }
+      .project:nth-child(2),
+      .project:nth-child(3) {
+        background: transparent;
+      }
+      .project .num {
+        align-self: start;
+        padding-top: 4px;
+      }
+      .project h3 {
+        font-size: clamp(20px, 2.8vw, 34px);
+        margin: 0 0 8px;
+      }
+      .project p {
+        font-size: 11px;
+        max-width: 430px;
+      }
+      .project .tags,
+      .project-link {
+        grid-column: 3;
+        grid-row: 1;
+        margin-top: 0;
+      }
+      .project-link {
+        align-self: end;
+        justify-self: end;
+      }
+      .section-head h2 {
+        font-size: clamp(34px, 4vw, 52px);
+      }
+      @media (max-width: 620px) {
+        .stage {
+          padding: 0 12px 35px;
+        }
+        .nav {
+          height: 62px;
+        }
+        .hero {
+          padding: 40px 18px 25px;
+          min-height: initial;
+        }
+        .hero h1 {
+          font-size: clamp(62px, 16vw, 92px);
+        }
+        .hero-visual {
+          min-height: 365px;
+        }
+        .orange-card {
+          height: 330px;
+        }
+        .terminal {
+          top: 83px;
+          height: 207px;
+          font-size: 8px;
+          line-height: 1.85;
+        }
+        .black-strip {
+          padding: 0 14px 24px;
+        }
+        .marquee {
+          font-size: 16vw;
+          margin-left: -14px;
+          margin-right: -14px;
+        }
+        .about-row {
+          grid-template-columns: 1fr;
+          gap: 21px;
+        }
+        .about-art {
+          min-height: 230px;
+        }
+        .below {
+          padding: 35px 17px;
+        }
+        .project {
+          display: flex;
+          min-height: 148px;
+          gap: 0;
+        }
+        .project .tags,
+        .project-link {
+          align-self: auto;
+          margin-top: 12px;
+        }
+        .section-head h2 {
+          font-size: 25px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      .code-tour {
+        border-top: 1px solid var(--line);
+        padding: 30px 0 48px;
+      }
+      .tour-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .tour-heading p {
+        font: 10px var(--mono);
+        color: #777;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      .tour-heading h3 {
+        font: 600 25px/1.05 var(--display);
+        letter-spacing: -0.05em;
+        margin: 7px 0 0;
+      }
+      .tour-heading > span {
+        font: 9px var(--mono);
+        color: #777;
+      }
+      .main-code {
+        display: grid;
+        grid-template-columns: 24% 1fr;
+        gap: 20px;
+      }
+      .main-code-label {
+        font: 10px/1.6 var(--mono);
+        color: #777;
+        text-transform: uppercase;
+      }
+      .main-code-label strong {
+        display: block;
+        color: var(--ink);
+        font: 600 16px/1.1 var(--display);
+        text-transform: none;
+        margin-top: 8px;
+      }
+      .code-panel {
+        background: #101210;
+        color: #e9ece3;
+        padding: 21px 23px;
+        overflow: auto;
+        box-shadow: 8px 8px 0 var(--orange);
+      }
+      .code-panel pre {
+        margin: 0;
+        font: 11px/1.8 var(--mono);
+        white-space: pre;
+      }
+      .code-panel .kw {
+        color: #efa7b1;
+      }
+      .code-panel .fn {
+        color: #ffbd55;
+      }
+      .code-panel .cm {
+        color: #7e877e;
+      }
+      .code-jump {
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-color: #ffbd55;
+        text-underline-offset: 3px;
+        cursor: pointer;
+      }
+      .code-jump:hover {
+        color: #ffbd55;
+      }
+      .terminal .code-jump {
+        color: #ffbd55;
+      }
+      .code-map {
+        margin-top: 25px;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+      .code-map-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        align-items: baseline;
+        margin-bottom: 12px;
+      }
+      .code-map-head h4 {
+        font: 600 16px var(--display);
+        margin: 0;
+      }
+      .code-map-head span {
+        font: 9px var(--mono);
+        color: #777;
+      }
+      .code-map-grid {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 18px;
+      }
+      .code-nav {
+        display: grid;
+        align-content: start;
+        gap: 5px;
+      }
+      .code-nav button {
+        border: 1px solid var(--line);
+        background: transparent;
+        padding: 11px 12px;
+        text-align: left;
+        font: 10px var(--mono);
+        color: #555;
+        cursor: pointer;
+      }
+      .code-nav button span {
+        display: inline-block;
+        width: 25px;
+        color: #9b6a20;
+      }
+      .code-nav button[aria-selected="true"] {
+        background: #101210;
+        color: white;
+        border-color: #101210;
+      }
+      .code-nav button[aria-selected="true"] span {
+        color: var(--orange);
+      }
+      .function-view {
+        min-width: 0;
+      }
+      .function-view h5 {
+        font: 600 17px var(--display);
+        margin: 0 0 6px;
+      }
+      .function-view p {
+        font-size: 11px;
+        line-height: 1.6;
+        color: #666;
+        margin: 0 0 13px;
+        max-width: 650px;
+      }
+      .function-code {
+        display: none;
+      }
+      .function-code.active {
+        display: block;
+      }
+      .function-code .code-panel {
+        box-shadow: none;
+        padding: 16px 18px;
+      }
+      .function-code pre {
+        font-size: 10px;
+      }
+      .code-map-note {
+        font: 9px/1.5 var(--mono);
+        color: #777;
+        margin-top: 10px;
+      }
+      @media (max-width: 620px) {
+        .main-code {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .tour-heading {
+          display: block;
+        }
+        .tour-heading > span {
+          display: block;
+          margin-top: 9px;
+        }
+        .code-map-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .code-nav {
+          display: flex;
+          overflow-x: auto;
+          padding-bottom: 5px;
+        }
+        .code-nav button {
+          flex: 0 0 auto;
+          white-space: nowrap;
+        }
+        .code-nav button span {
+          width: auto;
+          margin-right: 5px;
+        }
+        .code-panel {
+          padding: 16px 14px;
+        }
+        .code-panel pre {
+          font-size: 9px;
+        }
+        .code-map-head {
+          display: block;
+        }
+        .code-map-head span {
+          display: block;
+          margin-top: 6px;
+        }
+      }
+      /* Flujo de reclutamiento compacto y adaptable a pantalla chica. */
+      .rag-diagram {
+        padding-top: 20px;
+      }
+      .rag-diagram-head {
+        margin-bottom: 13px;
+      }
+      .rag-diagram-head h3 {
+        font-size: 19px;
+      }
+      .flow-scroll-hint {
+        display: none;
+      }
+      .project-flow {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-top: 18px;
+        padding: 18px 0 0;
+        /* border-top: 1px solid var(--line); */
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+      }
+      .flow-row {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        align-items: start;
+        gap: 12px;
+      }
+      .flow-node {
+        min-width: 0;
+        min-height: 126px;
+        padding: 9px 8px;
+        border-radius: 8px;
+      }
+      .flow-node:nth-child(n) {
+        background: #fffefa;
+      }
+      .flow-node:nth-child(2),
+      .flow-node:nth-child(6) {
+        background: #f8edd9;
+      }
+      .flow-node:nth-child(4) {
+        background: #edf0e9;
+      }
+      .flow-node:nth-child(5) {
+        background: #eaf0f0;
+      }
+      .flow-node:not(:last-child):after {
+        content: "";
+        width: 12px;
+        height: 8px;
+        right: -12px;
+        left: auto;
+        top: 27px;
+        bottom: auto;
+        background: #b8894f;
+        clip-path: polygon(
+          0 38%,
+          68% 38%,
+          68% 0,
+          100% 50%,
+          68% 100%,
+          68% 62%,
+          0 62%
+        );
+      }
+      .flow-node:last-child:after {
+        display: none;
+      }
+      .flow-node strong {
+        margin-top: 7px;
+        font-size: 11px;
+      }
+      .flow-node span {
+        margin-top: 5px;
+        font-size: 8px;
+        line-height: 1.35;
+      }
+      .flow-art {
+        height: 45px;
+        border-radius: 7px;
+      }
+      .flow-art.pdf:before {
+        top: 5px;
+        transform: scale(0.78);
+        transform-origin: top center;
+      }
+      .flow-art.pdf:after {
+        top: 24px;
+      }
+      .flow-art.validate:before {
+        top: 2px;
+        transform: scale(0.78);
+      }
+      .flow-art.validate:after {
+        top: 3px;
+        transform: scale(0.78);
+      }
+      .flow-art.queue:before {
+        top: 11px;
+        transform: scale(0.8);
+      }
+      .flow-art.queue:after {
+        top: 20px;
+      }
+      .flow-art.ocr:before {
+        top: 1px;
+        transform: scale(0.8);
+      }
+      .flow-art.ocr:after {
+        top: 30px;
+      }
+      .flow-art.chunks:before {
+        top: 8px;
+        transform: scale(0.8);
+      }
+      .flow-art.embedding:before {
+        top: 0;
+        transform: scale(0.8);
+        transform-origin: top center;
+      }
+      .flow-art.embedding:after {
+        top: 3px;
+        transform: scale(0.8);
+      }
+      .flow-art.qdrant:before {
+        top: 4px;
+        transform: scale(0.8);
+        transform-origin: top center;
+      }
+      .flow-art.profile:before {
+        width: 34px;
+        height: 34px;
+        left: calc(50% - 17px);
+        top: 5px;
+        border: 2px solid #111;
+        border-radius: 5px;
+        background: #fffefa;
+      }
+      .flow-art.profile:after {
+        width: 18px;
+        height: 2px;
+        left: calc(50% - 9px);
+        top: 16px;
+        background: #111;
+        box-shadow: 0 7px 0 #ffb43d;
+      }
+      .flow-art.match:before {
+        width: 34px;
+        height: 30px;
+        left: calc(50% - 17px);
+        top: 7px;
+        border: 2px solid #111;
+        border-radius: 5px;
+      }
+      .flow-art.match:after {
+        content: "↔";
+        left: calc(50% - 12px);
+        top: 11px;
+        padding: 0 2px;
+        background: #edece6;
+        color: #111;
+        font: 700 19px/1 var(--display);
+      }
+      .flow-art.review:before {
+        width: 34px;
+        height: 34px;
+        left: calc(50% - 17px);
+        top: 5px;
+        border: 2px solid #111;
+        border-radius: 5px;
+        background: #fffefa;
+      }
+      .flow-art.review:after {
+        content: "✓";
+        left: calc(50% - 9px);
+        top: 7px;
+        color: #111;
+        font: 700 24px/1 var(--display);
+      }
+      .flow-query {
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .query-node,
+      .query-arrow {
+        min-height: 42px;
+        padding: 10px 12px;
+        border-radius: 7px;
+        font-size: 9px;
+      }
+      /* Hacer explícita la unión entre etapas: tarjetas en una banda y nodos de conexión visibles. */
+      .flow-row {
+        gap: 0;
+      }
+      .flow-node {
+        border-radius: 0;
+        border-right: 0;
+      }
+      .flow-node:first-child {
+        border-radius: 9px 0 0 9px;
+      }
+      .flow-node:last-child {
+        border-right: 1px solid #cfcfc8;
+        border-radius: 0 9px 9px 0;
+      }
+      .flow-node:nth-child(1) {
+        z-index: 7;
+      }
+      .flow-node:nth-child(2) {
+        z-index: 6;
+      }
+      .flow-node:nth-child(3) {
+        z-index: 5;
+      }
+      .flow-node:nth-child(4) {
+        z-index: 4;
+      }
+      .flow-node:nth-child(5) {
+        z-index: 3;
+      }
+      .flow-node:nth-child(6) {
+        z-index: 2;
+      }
+      .flow-node:nth-child(7) {
+        z-index: 1;
+      }
+      .flow-node:not(:last-child):after {
+        content: "›";
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        top: 13px;
+        right: -10px;
+        bottom: auto;
+        left: auto;
+        border-radius: 50%;
+        background: var(--orange);
+        color: #111;
+        font: 700 19px/1 var(--display);
+        clip-path: none;
+        box-shadow: 0 0 0 2px var(--paper);
+      }
+      @media (max-width: 900px) {
+        .flow-scroll-hint {
+          display: block;
+          margin: 0 0 8px;
+          color: #777;
+          font: 9px var(--mono);
+        }
+        .flow-row {
+          display: flex;
+          gap: 14px;
+          overflow-x: auto;
+          padding: 3px 4px 12px;
+          scroll-snap-type: x proximity;
+        }
+        .flow-node {
+          flex: 0 0 142px;
+          min-height: 118px;
+          scroll-snap-align: start;
+          border-right: 1px solid #cfcfc8;
+          border-radius: 8px;
+        }
+        .flow-node:not(:last-child):after {
+          content: "›";
+          display: grid;
+          place-items: center;
+          width: 20px;
+          height: 20px;
+          top: 13px;
+          right: -17px;
+          bottom: auto;
+          left: auto;
+          background: var(--orange);
+          color: #111;
+          font: 700 19px/1 var(--display);
+          clip-path: none;
+        }
+      }
+      @media (max-width: 620px) {
+        .flow-query {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* Fuerza una sola fila en todos los tamaños; en pantallas chicas se desplaza lateralmente. */
+      .rag-diagram .flow-row {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: stretch;
+        gap: 12px;
+        width: 100%;
+      }
+      .rag-diagram .flow-node {
+        flex: 1 1 0;
+        min-width: 0;
+        grid-column: auto;
+      }
+      @media (max-width: 900px) {
+        .rag-diagram .flow-row {
+          overflow-x: auto;
+          overscroll-behavior-x: contain;
+          scroll-snap-type: x proximity;
+          scrollbar-width: thin;
+        }
+        .rag-diagram .flow-node {
+          flex: 0 0 142px;
+          scroll-snap-align: start;
+        }
+      }
+      .project-flow {
+        width: 100%;
+        margin-top: 18px;
+        padding: 18px;
+        /* border: 1px solid #cfd4c6;
+        border-radius: 12px;
+        background: #e3e5dd; */
+      }
+      .project-flow .rag-diagram-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .project-flow .flow-scroll-hint {
+        display: block;
+      }
+      .project-flow .flow-row {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 14px;
+        width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        padding: 3px 4px 14px;
+        scroll-snap-type: x proximity;
+        scrollbar-width: thin;
+        scrollbar-color: #9da294 #d8dbd2;
+      }
+      .project-flow .flow-node {
+        flex: 0 0 160px;
+        min-height: 128px;
+        border: 1px solid #c9ccc3;
+        border-radius: 8px;
+        background: #fffefa;
+        scroll-snap-align: start;
+      }
+      .project-flow .flow-node:not(:last-child):after {
+        box-shadow: 0 0 0 2px #e3e5dd;
+      }
+      @media (max-width: 620px) {
+        .project-flow {
+          margin-top: 14px;
+          padding: 14px 10px;
+        }
+        .project-flow .rag-diagram-head {
+          display: block;
+        }
+        .project-flow .flow-node {
+          flex-basis: 142px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage" id="home">
+      <div class="backdrop-word" aria-hidden="true">portfolio</div>
+      <div class="backdrop-orbit" aria-hidden="true"></div>
+      <span class="cross one" aria-hidden="true"><i></i></span
+      ><span class="cross two" aria-hidden="true"><i></i></span>
+      <main class="page">
+        <nav class="nav" aria-label="Navegación">
+          <a class="logo" href="#home" aria-label="Giovanni Arellano"
+            >GA<span></span></a
+          ><a href="#home">Inicio</a><a href="#about">Perfil</a
+          ><a href="#projects">Proyectos</a><a href="#experience">Experiencia</a
+          ><a href="#contact">Contacto</a
+          ><span class="availability">✦ Abierto a oportunidades</span>
+        </nav>
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              Ingeniero en Sistemas Computacionales · Veracruz, MX
             </div>
-        </div>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-6 pt-28 pb-20 space-y-28">
-
-        <!-- Hero Section -->
-        <section class="space-y-6 pt-8">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-500 text-xs font-semibold">
-                <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                Disponible para nuevos proyectos y roles
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100 max-w-3xl leading-tight">
-                Desarrollador Backend & Fullstack especializado en <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-300">sistemas de alto impacto</span>.
-            </h1>
-            <p class="text-lg text-slate-400 max-w-2xl leading-relaxed">
-                Diseño y construyo arquitecturas escalables, APIs de alto rendimiento con Python y FastAPI, e integro modelos de Inteligencia Artificial para resolver problemas complejos de negocio.
+            <h1><span>backend</span><span class="accent">fullstack</span></h1>
+            <p class="intro">
+              Desarrollo sistemas, APIs y productos web que conectan tecnología
+              con necesidades reales.
             </p>
-            <div class="flex flex-wrap gap-4 pt-4">
-                <a href="#proyectos" class="px-6 py-3 rounded-lg bg-brand-500 hover:bg-brand-600 text-slate-950 font-semibold transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2">
-                    Ver Proyectos <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-                <a href="#contacto" class="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 font-semibold transition-all">
-                    Contactar
-                </a>
+            <div class="social">
+              <a
+                href="https://www.linkedin.com/in/gio-arellano"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                >in</a
+              ><a href="mailto:cuzztomgdev@gmail.com" aria-label="Correo">@</a
+              ><a href="#projects" aria-label="Proyectos">↘</a>
             </div>
-        </section>
-
-        <!-- Sobre mi -->
-        <section id="sobre-mi" class="space-y-4">
-            <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Sobre mí</h2>
-            <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 space-y-4">
-                <p class="text-slate-300 leading-relaxed">
-                    Especializado en la creación de servicios backend modernos, procesamiento asíncrono y la optimización de flujos empresariales. Me enfoco en escribir código limpio, mantenible y centrado en el valor del producto final.
-                </p>
+            <div class="hero-stats">
+              <div class="stat">
+                <strong>+3</strong
+                ><small
+                  >Años creando software y resolviendo problemas
+                  complejos</small
+                >
+              </div>
+              <div class="stat">
+                <strong>4</strong
+                ><small>Áreas de experiencia en backend y producto</small>
+              </div>
             </div>
+          </div>
+          <div class="hero-visual">
+            <div class="orange-card">
+              <div class="signature">G. Arellano</div>
+              <div class="globe">⌘</div>
+              <div class="terminal">
+                <div class="termbar">
+                  <i></i><i></i><i></i
+                  ><span class="termname">document_worker.py</span>
+                </div>
+                <div class="code-line">
+                  <span class="pink">async def</span>
+                  <a
+                    class="orange code-jump"
+                    href="#code-details"
+                    data-function-link="main"
+                    >process_inbox</a
+                  >():
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;messages = <span class="pink">await</span>
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="messages"
+                    >get_unseen_messages()</a
+                  >
+                </div>
+                <div class="code-line">
+                  <span class="pink">for</span> message
+                  <span class="pink">in</span> messages:
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;files = <span class="pink">await</span>
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="attachments"
+                    >extract_attachments(message)</a
+                  >
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;files =
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="normalize"
+                    >normalize_files(files)</a
+                  >
+                </div>
+                <div class="code-line dim">
+                  &nbsp;&nbsp;#
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="validate"
+                    >validate, group and deduplicate</a
+                  >
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;package =
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="package"
+                    >prepare_package(...)</a
+                  >
+                </div>
+                <div class="code-line">
+                  &nbsp;&nbsp;<span class="pink">await</span>
+                  <a
+                    class="code-jump"
+                    href="#code-details"
+                    data-function-link="publish"
+                    >publish_document_job(...)</a
+                  >
+                </div>
+                <div class="code-line">
+                  <span class="pink">return</span> enqueued
+                </div>
+                <div class="response">
+                  Recepción de documentos vía correo electrónico.
+                </div>
+              </div>
+            </div>
+            <div class="bubble">⌘</div>
+            <div class="bubble two">{ }</div>
+            <a class="round-link" href="#projects" aria-label="Ver proyectos"
+              >↗</a
+            >
+          </div>
         </section>
-
-        <!-- Proyectos -->
-        <section id="proyectos" class="space-y-8">
+      </main>
+      <a
+        class="project-peek"
+        href="https://careers.nuvoil.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Ver sistema de reclutamiento Nuvoil"
+        ><div class="peek-art"></div>
+        <div class="peek-photo"></div>
+        <div class="peek-label">PROYECTO DESTACADO · NUV OIL</div>
+        <div class="peek-title">Reclutamiento digital</div>
+        <div class="peek-meta">OCR · LLM · PORTAL WEB ↗</div></a
+      >
+      <section class="black-strip" id="about">
+        <h2 class="marquee">sobre mí <b>✦</b> sobre mí <b>✦</b> sobre mí</h2>
+        <div class="about-row">
+          <div class="about-art" aria-hidden="true">
+            <div class="rings"></div>
+            <div class="cube"></div>
+          </div>
+          <div class="about-copy">
+            <div class="label">Sobre mí · 01</div>
+            <h2>Ideas complejas.<br />Sistemas claros.</h2>
+            <p>
+              Soy Giovanni, ingeniero en Sistemas Computacionales y
+              desarrollador backend / fullstack. He creado APIs, servicios
+              concurrentes, integraciones con ERP y herramientas de IA para
+              gestión documental y reclutamiento.
+            </p>
+            <a href="#experience">CONOCE MI TRAYECTORIA ↘</a>
+          </div>
+        </div>
+      </section>
+      <div class="below">
+        <section class="code-tour" id="code" aria-labelledby="code-title">
+          <!-- <div class="tour-heading">
             <div>
-                <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Portafolio</h2>
-                <h3 class="text-2xl font-bold text-slate-100">Proyectos Destacados</h3>
+              <p>Recorrido de código · encolado de documentos</p>
+              <h3 id="code-title">
+                Primero, la función que coordina el flujo.
+              </h3>
             </div>
-
-            <div class="grid grid-cols-1 gap-8">
-
-                <!-- Proyecto 1 -->
-                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs text-brand-500 font-mono">01 / Fullstack & AI Integration</span>
-                            <h4 class="text-xl font-bold text-slate-100 mt-1">Plataforma de Reclutamiento Inteligente con IA</h4>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Desarrollo de una solución web integral para empresas clientes que automatiza la recepción y evaluación de candidatos. Integra modelos de IA para el análisis semántico de CVs, clasificando y puntuando a los postulantes de acuerdo con los requisitos técnicos de la vacante.
-                    </p>
-                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
-                        <p><strong class="text-brand-500">Reto técnico:</strong> Extracción precisa de datos heterogéneos y cálculo de coincidencias semánticas en tiempo real.</p>
-                        <p><strong class="text-brand-500">Impacto:</strong> Reducción drástica en el tiempo de filtrado inicial de perfiles por parte del equipo de Selección.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Python</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">FastAPI</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">AI / Natural Language Processing</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">PostgreSQL</span>
-                    </div>
-                </article>
-
-                <!-- Proyecto 2 -->
-                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs text-brand-500 font-mono">02 / Backend & Architecture Migration</span>
-                            <h4 class="text-xl font-bold text-slate-100 mt-1">Migración de Servicios SOAP a REST API</h4>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Modernización de la arquitectura de servicios web heredados en protocolo SOAP hacia un entorno RESTful con FastAPI. Implementación de esquemas de validación estrictos y generación automática de documentación interactiva.
-                    </p>
-                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
-                        <p><strong class="text-brand-500">Reto técnico:</strong> Mantener la compatibilidad y consistencia de los datos críticos durante el proceso de transición de formato XML a JSON.</p>
-                        <p><strong class="text-brand-500">Impacto:</strong> Optimización en la latencia de respuesta y simplificación del consumo para aplicaciones cliente.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">FastAPI</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Pydantic</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">RESTful Architecture</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">SOAP / XML</span>
-                    </div>
-                </article>
-
-                <!-- Proyecto 3 -->
-                <article class="bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all rounded-2xl p-8 space-y-6">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs text-brand-500 font-mono">03 / Microservices & Messaging</span>
-                            <h4 class="text-xl font-bold text-slate-100 mt-1">Sistema de Microservicios para Procesamiento Asíncrono</h4>
-                        </div>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Diseño y despliegue de microservicios orientados al procesamiento masivo de mensajes. Implementación de patrones desacoplados para garantizar la tolerancia a fallos y la disponibilidad continua ante picos de tráfico.
-                    </p>
-                    <div class="space-y-2 text-xs font-mono text-slate-300 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
-                        <p><strong class="text-brand-500">Reto técnico:</strong> Prevención de pérdida de eventos y control de concurrencia bajo cargas elevadas.</p>
-                        <p><strong class="text-brand-500">Impacto:</strong> Alta estabilidad operativa y escalabilidad horizontal eficiente.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 pt-2">
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Python</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Microservicios</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Message Queues</span>
-                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-mono rounded-md">Docker</span>
-                    </div>
-                </article>
-
+            <span>Ejemplo conceptual · Python</span>
+          </div>
+          <div class="main-code">
+            <div class="main-code-label">
+              Código principal<strong>process_inbox()</strong>Lee mensajes
+              pendientes, prepara sus archivos y publica un trabajo por paquete.
             </div>
+            <div class="code-panel">
+              <pre>
+                <span class="kw">async def</span>
+                <span class="fn">process_inbox</span>
+                (): messages =
+                <span class="kw">await</span>
+                get_unseen_messages()enqueued =
+                <span class="cm">0</span>
+                <span class="kw">for</span>
+                message
+                <span class="kw">in</span> messages:
+        files = <span class="kw">await</span> extract_attachments(message)
+        files = normalize_files(files)
+        files = validate_group_and_deduplicate(files)
+        <span class="kw">if not</span> files:
+            <span class="kw">continue</span>
+
+        package = prepare_package(message, files)
+        <span class="kw">await</span> publish_document_job(package)
+        enqueued += <span class="cm">1</span>
+
+              <span class="kw">return</span> enqueued</pre>
+            </div>
+          </div> -->
+          <div class="code-map" id="code-details">
+            <div class="code-map-head">
+              <h4>Recorre cada bloque y función</h4>
+              <span>Selecciona una parte para ver su código y qué hace</span>
+            </div>
+            <div class="code-map-grid">
+              <nav
+                class="code-nav"
+                aria-label="Navegación del código para encolar documentos"
+              >
+                <button type="button" data-function="main" aria-selected="true">
+                  <span>01</span>Función principal</button
+                ><button
+                  type="button"
+                  data-function="messages"
+                  aria-selected="false"
+                >
+                  <span>02</span>Buscar mensajes pendientes</button
+                ><button
+                  type="button"
+                  data-function="attachments"
+                  aria-selected="false"
+                >
+                  <span>03</span>Extraer adjuntos</button
+                ><button
+                  type="button"
+                  data-function="normalize"
+                  aria-selected="false"
+                >
+                  <span>04</span>Normalizar archivos</button
+                ><button
+                  type="button"
+                  data-function="validate"
+                  aria-selected="false"
+                >
+                  <span>05</span>Validar y deduplicar</button
+                ><button
+                  type="button"
+                  data-function="package"
+                  aria-selected="false"
+                >
+                  <span>06</span>Preparar paquete</button
+                ><button
+                  type="button"
+                  data-function="publish"
+                  aria-selected="false"
+                >
+                  <span>07</span>Publicar en la cola
+                </button>
+              </nav>
+              <div class="function-view" aria-live="polite">
+                <article class="function-code active" data-code="main">
+                  <h5>1. Función principal: process_inbox</h5>
+                  <p>
+                    Coordina el recorrido. Por cada mensaje llama a las
+                    funciones auxiliares, omite paquetes vacíos y cuenta los
+                    trabajos publicados.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">async def</span> <span class="fn">process_inbox</span>():
+    messages = <span class="kw">await</span> get_unseen_messages()
+    enqueued = <span class="cm">0</span>
+    <span class="kw">for</span> message <span class="kw">in</span> messages:
+        files = <span class="kw">await</span> extract_attachments(message)
+        files = normalize_files(files)
+        files = validate_group_and_deduplicate(files)
+        <span class="kw">if not</span> files:
+            <span class="kw">continue</span>
+        package = prepare_package(message, files)
+        <span class="kw">await</span> publish_document_job(package)
+        enqueued += <span class="cm">1</span>
+    <span class="kw">return</span> enqueued</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Orden: mensajes → adjuntos → validación → paquete → cola.
+                  </div>
+                </article>
+                <article class="function-code" data-code="messages">
+                  <h5>2. Buscar mensajes pendientes</h5>
+                  <p>
+                    Consulta solo mensajes no procesados para no volver a
+                    encolar los que ya se atendieron.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">async def</span> <span class="fn">get_unseen_messages</span>():
+    <span class="kw">return await</span> mail.search(
+        folder=<span class="cm">"INBOX"</span>,
+        unread=<span class="kw">True</span>,
+        without_label=<span class="cm">"documents-enqueued"</span>
+    )</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Se llama desde: <code>process_inbox()</code>
+                  </div>
+                </article>
+                <article class="function-code" data-code="attachments">
+                  <h5>3. Extraer adjuntos</h5>
+                  <p>
+                    Recorre los adjuntos del mensaje y conserva los archivos que
+                    pueden entrar al flujo documental.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">async def</span> <span class="fn">extract_attachments</span>(message):
+    attachments = <span class="kw">await</span> mail.get_attachments(message.id)
+    <span class="kw">return</span> [item <span class="kw">for</span> item <span class="kw">in</span> attachments
+            <span class="kw">if</span> item.has_content]</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Se llama después de: <code>get_unseen_messages()</code>
+                  </div>
+                </article>
+                <article class="function-code" data-code="normalize">
+                  <h5>4. Normalizar archivos</h5>
+                  <p>
+                    Unifica nombres y tipos para que archivos equivalentes se
+                    procesen de forma consistente.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">def</span> <span class="fn">normalize_files</span>(files):
+    <span class="kw">return</span> [file.with_metadata(
+        name=clean_filename(file.name),
+        content_type=detect_content_type(file)
+    ) <span class="kw">for</span> file <span class="kw">in</span> files]</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Se llama después de: <code>extract_attachments()</code>
+                  </div>
+                </article>
+                <article class="function-code" data-code="validate">
+                  <h5>5. Validar, agrupar y deduplicar</h5>
+                  <p>
+                    Descarta archivos inválidos, agrupa los relacionados y
+                    elimina duplicados usando una huella del contenido.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">def</span> <span class="fn">validate_group_and_deduplicate</span>(files):
+    valid = [file <span class="kw">for</span> file <span class="kw">in</span> files
+             <span class="kw">if</span> allowed_type(file.content_type)
+             <span class="kw">and</span> file.size &lt; MAX_FILE_SIZE]
+    unique = {sha256(file.content): file <span class="kw">for</span> file <span class="kw">in</span> valid}
+    <span class="kw">return</span> group_by_document(list(unique.values()))</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Se llama después de: <code>normalize_files()</code>
+                  </div>
+                </article>
+                <article class="function-code" data-code="package">
+                  <h5>6. Preparar el paquete</h5>
+                  <p>
+                    Construye el payload que recibirá el worker: origen del
+                    mensaje, archivos y metadatos para trazabilidad.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">def</span> <span class="fn">prepare_package</span>(message, files):
+    <span class="kw">return</span> {
+        <span class="cm">"source_message_id"</span>: message.id,
+        <span class="cm">"sender"</span>: message.sender,
+        <span class="cm">"files"</span>: [file.to_payload() <span class="kw">for</span> file <span class="kw">in</span> files],
+        <span class="cm">"idempotency_key"</span>: make_key(message.id, files)
+    }</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Se llama después de:
+                    <code>validate_group_and_deduplicate()</code>
+                  </div>
+                </article>
+                <article class="function-code" data-code="publish">
+                  <h5>7. Publicar en la cola</h5>
+                  <p>
+                    Envía el paquete al worker. La clave de idempotencia ayuda a
+                    evitar trabajos duplicados si el correo vuelve a
+                    consultarse.
+                  </p>
+                  <div class="code-panel">
+                    <pre><span class="kw">async def</span> <span class="fn">publish_document_job</span>(package):
+    <span class="kw">await</span> queue.publish(
+        topic=<span class="cm">"documents.process"</span>,
+        message=package,
+        deduplication_key=package[<span class="cm">"idempotency_key"</span>]
+    )</pre>
+                  </div>
+                  <div class="code-map-note">
+                    Aquí termina el encolado. El worker consume este mensaje
+                    para procesar los documentos.
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <!-- Stack Tecnologico -->
-        <section id="skills" class="space-y-6">
+        <section class="section" id="projects">
+          <div class="section-head">
             <div>
-                <h2 class="text-xs uppercase font-bold text-brand-500 tracking-widest">Habilidades</h2>
-                <h3 class="text-2xl font-bold text-slate-100">Stack Tecnológico</h3>
+              <span>02 / Selección</span>
+              <h2>Proyectos destacados</h2>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
-                    <h4 class="text-sm font-semibold text-slate-200">Backend & Lenguajes</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Python, FastAPI, Django, REST APIs, Microservicios, SOAP</p>
-                </div>
-                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
-                    <h4 class="text-sm font-semibold text-slate-200">AI & Datos</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">NLP, Integración de LLMs / Vector Search, RAG, Parsing de Documentos</p>
-                </div>
-                <div class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl space-y-3">
-                    <h4 class="text-sm font-semibold text-slate-200">Infraestructura & Herramientas</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">Git, Docker, PostgreSQL, Linux, Colas de Mensajes</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contacto -->
-        <section id="contacto" class="space-y-6">
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-8 sm:p-12 text-center space-y-6">
-                <h2 class="text-3xl font-bold text-slate-100">¿Hablamos de tu próximo proyecto?</h2>
-                <p class="text-slate-400 text-sm max-w-lg mx-auto">
-                    Estoy disponible para colaborar en desarrollo backend, integraciones de IA o migraciones de arquitectura.
+            <span>Trabajo aplicado</span>
+          </div>
+          <div class="projects-list">
+            <article class="project">
+              <span class="num">GESTIÓN DOCUMENTAL · RAG</span>
+              <div>
+                <h3>Consulta inteligente de documentos</h3>
+                <p>
+                  Módulo con arquitectura RAG para consultar documentación
+                  interna mediante un chat.
                 </p>
-                <div class="flex justify-center gap-4 pt-2">
-                    <a href="mailto:tu-email@ejemplo.com" class="px-6 py-3 rounded-lg bg-brand-500 hover:bg-brand-600 text-slate-950 font-semibold transition-all flex items-center gap-2">
-                        <i data-lucide="mail" class="w-4 h-4"></i> Enviar correo
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 font-semibold transition-all flex items-center gap-2">
-                        <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                    </a>
+                <div class="tags">RAG · LLM · RECUPERACIÓN DE INFORMACIÓN</div>
+              </div>
+            </article>
+            <article class="project">
+              <span class="num">RECLUTAMIENTO CON IA</span>
+              <div>
+                <h3>Sistema de reclutamiento Nuvoil</h3>
+                <p>
+                  Diseñé y desarrollé el sistema de reclutamiento de Nuvoil. El
+                  flujo utiliza OCR y LLM para procesar CV y apoyar el análisis
+                  de candidatos; el portal público permite explorar vacantes y
+                  postularse en línea.
+                </p>
+                <div class="tags">OCR · LLM · FULLSTACK · INTEGRACIONES</div>
+                <a
+                  class="project-link"
+                  href="https://careers.nuvoil.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Visitar careers.nuvoil.com ↗</a
+                >
+              </div>
+              <section class="rag-diagram project-flow" id="rag-flow">
+                <div class="rag-diagram-head">
+                  <div>
+                    <!-- <p>Flujo del proyecto</p> -->
+                    <!-- <h3>
+                      Del CV postulado al análisis que revisa el reclutador.
+                    </h3> -->
+                  </div>
+                  <!-- <p>Portal · OCR · LLM</p> -->
                 </div>
-            </div>
+                <!-- <p class="flow-scroll-hint">
+                  Desliza para recorrer todas las etapas →
+                </p> -->
+                <div class="flow-row">
+                  <div class="flow-node">
+                    <div class="flow-art pdf"></div>
+                    <strong>1. Postular</strong
+                    ><span>CV + vacante desde el portal</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art validate"></div>
+                    <strong>2. Validar</strong
+                    ><span>Formato y datos requeridos</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art queue"></div>
+                    <strong>3. Encolar</strong
+                    ><span>Análisis en segundo plano</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art ocr"></div>
+                    <strong>4. Extraer</strong><span>Texto del CV con OCR</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art profile"></div>
+                    <strong>5. Estructurar</strong
+                    ><span>Experiencia, estudios y habilidades</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art match"></div>
+                    <strong>6. Analizar</strong
+                    ><span>Perfil frente a requisitos del puesto</span>
+                  </div>
+                  <div class="flow-node">
+                    <div class="flow-art review"></div>
+                    <strong>7. Revisar</strong
+                    ><span>Resultado disponible para reclutamiento</span>
+                  </div>
+                </div>
+              </section>
+            </article>
+            <article class="project">
+              <span class="num">BACKEND / MODERNIZACIÓN</span>
+              <div>
+                <h3>Migración de servicios a FastAPI</h3>
+                <p>
+                  Modernización de servicios web con tipado estático y
+                  validaciones para fortalecer el backend.
+                </p>
+                <div class="tags">PYTHON · FASTAPI · APIS</div>
+              </div>
+            </article>
+          </div>
         </section>
-
-    </main>
-
-    <footer class="border-t border-slate-900 py-8 text-center text-xs text-slate-600">
-        <p>© 2026 — Diseñado y desarrollado para GitHub Pages.</p>
+        <section class="section" id="experience">
+          <div class="section-head">
+            <div>
+              <!-- <span>03 / Recorrido</span> -->
+              <h2>Experiencia</h2>
+            </div>
+          </div>
+          <article class="timeline">
+            <time>DIC 2025 — AGO 2026</time>
+            <div>
+              <div class="company-line">
+                <img
+                  class="company-logo ehecatl"
+                  src="assets/companies/ehecatl.png"
+                  alt="Ehecatl Servicios de Software"
+                />
+                <h3>Ingeniero Fullstack</h3>
+              </div>
+              <p>
+                Módulo documental RAG, portal de vacantes integrado y motor de
+                análisis de CV con IA.
+              </p>
+            </div>
+            <span class="tech">RAG · IA · WEB</span>
+          </article>
+          <article class="timeline">
+            <time>ENE — NOV 2025</time>
+            <div>
+              <div class="company-line">
+                <img
+                  class="company-logo gds"
+                  src="assets/companies/4g-data-systems.png"
+                  alt="4G Data Systems"
+                />
+                <h3>Ingeniero de Software Backend</h3>
+              </div>
+              <p>
+                Migración de servicios a FastAPI e integración de proxies Squid
+                para solicitudes externas.
+              </p>
+            </div>
+            <span class="tech">FASTAPI · PYTHON</span>
+          </article>
+          <article class="timeline">
+            <time>ENE — DIC 2024</time>
+            <div>
+              <div class="company-line">
+                <img
+                  class="company-logo gds"
+                  src="assets/companies/4g-data-systems.png"
+                  alt="4G Data Systems"
+                />
+                <h3>Ingeniero de Desarrollo Jr.</h3>
+              </div>
+              <p>
+                Procesamiento concurrente e integración con ERP externos con
+                retroalimentación en tiempo real.
+              </p>
+            </div>
+            <span class="tech">BACKEND · ERP</span>
+          </article>
+          <article class="timeline">
+            <time>2023</time>
+            <div>
+              <div class="company-line">
+                <img
+                  class="company-logo gds"
+                  src="assets/companies/4g-data-systems.png"
+                  alt="4G Data Systems"
+                />
+                <h3>Practicante de Desarrollo</h3>
+              </div>
+              <p>
+                Caché para consultas y sistema de bloqueo distribuido para
+                procesamiento atómico.
+              </p>
+            </div>
+            <span class="tech">CACHÉ · DISTRIBUIDOS</span>
+          </article>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <!-- <span>04 / Herramientas</span> -->
+              <h2>Stack tecnológico</h2>
+            </div>
+          </div>
+          <div class="skills">
+            <div class="skill">
+              <b>BACKEND</b><span>Python · FastAPI<br />Django · REST</span>
+            </div>
+            <div class="skill">
+              <b>DATOS</b><span>PostgreSQL · MySQL<br />MongoDB · Redis</span>
+            </div>
+            <div class="skill">
+              <b>MENSAJERÍA</b><span>RabbitMQ<br />Microservicios</span>
+            </div>
+            <div class="skill">
+              <b>FRONTEND</b><span>React · Angular<br />Ext JS</span>
+            </div>
+            <div class="skill">
+              <b>PLATAFORMA</b><span>Nginx<br />Linux</span>
+            </div>
+            <div class="skill">
+              <b>FORMACIÓN</b
+              ><span
+                >Ing. en Sistemas Computacionales<br />IT Veracruz ·
+                2019–2024</span
+              >
+            </div>
+            <div class="skill">
+              <b>RECONOCIMIENTO</b
+              ><span>1.er lugar · Concurso Estatal de Programación 2022</span>
+            </div>
+            <div class="skill">
+              <b>IDIOMAS</b><span>Español · Inglés B1</span>
+            </div>
+          </div>
+        </section>
+        <section class="contact" id="contact">
+          <div>
+            <h2>¿Construimos algo útil?</h2>
+            <p>
+              Abierto a oportunidades y colaboraciones en desarrollo de
+              software.
+            </p>
+          </div>
+          <a href="mailto:cuzztomgdev@gmail.com">Hablemos ↗</a>
+        </section>
+      </div>
+    </div>
+    <footer class="footer">
+      <span>© 2026 Giovanni Arellano</span><span>Veracruz, México</span
+      ><a
+        href="https://www.linkedin.com/in/gio-arellano"
+        target="_blank"
+        rel="noopener noreferrer"
+        >LinkedIn ↗</a
+      >
     </footer>
-
     <script>
-        lucide.createIcons();
+      const functionButtons = [
+        ...document.querySelectorAll(".code-nav button"),
+      ];
+      const functionPanels = [...document.querySelectorAll(".function-code")];
+      const functionTargets = {
+        process_inbox: "main",
+        get_unseen_messages: "messages",
+        extract_attachments: "attachments",
+        normalize_files: "normalize",
+        validate_group_and_deduplicate: "validate",
+        prepare_package: "package",
+        publish_document_job: "publish",
+      };
+      function selectFunction(selected) {
+        const button = functionButtons.find(
+          (item) => item.dataset.function === selected,
+        );
+        if (!button) return;
+        functionButtons.forEach((item) =>
+          item.setAttribute("aria-selected", String(item === button)),
+        );
+        functionPanels.forEach((panel) =>
+          panel.classList.toggle("active", panel.dataset.code === selected),
+        );
+      }
+      function makeFunctionLinksNavigable() {
+        const names = Object.keys(functionTargets);
+        const referencePattern = new RegExp(
+          `\\b(${names.join("|")})(?=\\s*\\()`,
+          "g",
+        );
+
+        document.querySelectorAll(".function-code").forEach((panel) => {
+          panel.querySelectorAll(".fn").forEach((definition) => {
+            const target = functionTargets[definition.textContent.trim()];
+            if (!target || definition.closest("a")) return;
+            const link = document.createElement("a");
+            link.className = "code-jump";
+            link.href = "#code-details";
+            link.dataset.functionLink = target;
+            definition.replaceWith(link);
+            link.append(definition);
+          });
+
+          const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
+          const textNodes = [];
+          while (walker.nextNode()) {
+            const node = walker.currentNode;
+            if (!node.parentElement.closest("a, .fn")) textNodes.push(node);
+          }
+
+          textNodes.forEach((node) => {
+            const value = node.nodeValue;
+            const matches = [...value.matchAll(referencePattern)];
+            if (!matches.length) return;
+            const fragment = document.createDocumentFragment();
+            let cursor = 0;
+            matches.forEach((match) => {
+              const start = match.index;
+              const name = match[1];
+              if (start > cursor) fragment.append(value.slice(cursor, start));
+              const link = document.createElement("a");
+              link.className = "code-jump";
+              link.href = "#code-details";
+              link.dataset.functionLink = functionTargets[name];
+              link.textContent = name;
+              fragment.append(link);
+              cursor = start + name.length;
+            });
+            if (cursor < value.length) fragment.append(value.slice(cursor));
+            node.replaceWith(fragment);
+          });
+        });
+      }
+      makeFunctionLinksNavigable();
+      functionButtons.forEach((button) =>
+        button.addEventListener("click", () =>
+          selectFunction(button.dataset.function),
+        ),
+      );
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("[data-function-link]");
+        if (link) {
+          event.preventDefault();
+          selectFunction(link.dataset.functionLink);
+          document
+            .getElementById("code-details")
+            .scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
